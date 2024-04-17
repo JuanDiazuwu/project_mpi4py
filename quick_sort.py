@@ -10,16 +10,16 @@ def partition(array:list, low:int, high:int) -> int:
   (array[i + 1], array[high]) = (array[high], array[i + 1])
   return i + 1
 
-def quickSort(array:list, low:int, high:int) -> list:
+def quick_sort(array:list, low:int, high:int) -> list:
   if low < high:
     pi = partition(array, low, high)
-    quickSort(array, low, pi - 1)
-    quickSort(array, pi + 1, high)
+    quick_sort(array, low, pi - 1)
+    quick_sort(array, pi + 1, high)
 
 def main():
     data = [8, 7, 2, 1, 0, 9, 6]
     print(f'Unsorted Array: {data}')
-    quickSort(data, 0, len(data)-1)
+    quick_sort(data, 0, len(data)-1)
     print(f'Sorted Array: {data}')
 
 if __name__ == '__main__':
