@@ -31,3 +31,11 @@ pip install mpi4py
 ``` bash
 pip install -r requirements.txt
 ```
+
+
+
+### Run web scrapping
+
+``` bash
+mpiexec -n 4 python web_scrapping.py
+```
