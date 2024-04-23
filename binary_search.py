@@ -23,7 +23,7 @@ def main():
     for i in range(100):
         data.append(2 * i + 1)  # Genera números impares del 1 al 199
 
-    search_number = random.randint(1,199)
+    search_number = 80
 
 
     # Dividimos el arreglo entre los procesos
@@ -35,23 +35,31 @@ def main():
     local_data = data[start_index:end_index]
 
 
-    print(f'rank:{rank}')
-    print(f'size:{size}')
-    print(f"Arreglo divido del indice {start_index} al indice {end_index}")
-    print(local_data)
-    print("\n")
+    print("---------------------------------")
+    print(f"Rank {rank}: Subarreglo desde el índice {start_index} hasta el índice {end_index - 1}:\n{local_data}")
+
+
 
     result = binary_search(local_data, 0, len(local_data) - 1, search_number)
     gathered_results = comm.gather(result, root=0)
-    
+    #print(gathered_results)
 
     # Imprimir resultados en el proceso 0
     if rank == 0:
-        final_result = next((i * local_data_size + result for i, result in enumerate(gathered_results) if result != -1), -1)
+        final_result = -1          
+        for i, result in enumerate(gathered_results):
+            if result != -1:  
+                final_result = i * local_data_size + result
+                break  
+
         if final_result != -1:
+            print("\n")
             print(f"El elemento {search_number} SI está presente en el índice {final_result}.")
         else:
+            print("\n")
             print(f"El elemento {search_number} NO está presente en el arreglo.")
+    
+
 
 
 if __name__ == '__main__':
