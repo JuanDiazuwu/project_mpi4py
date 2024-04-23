@@ -2,6 +2,9 @@ from mpi4py import MPI
 from random import randint
 import math
 
+DATA = [3, 5, 7, 4, 6, 7, 11, 9, 2, 8, 3, 2]
+print(DATA)
+
 def partition(array:list, low:int, high:int) -> int:
   pivot = array[high]
   i = low - 1
@@ -36,11 +39,9 @@ def parallel_quicksort(data:list, comm):
   if comm.rank==0:
     print([item for sublist in g for item in sublist])
 
-def main():
-  comm = MPI.COMM_WORLD  
-  DATA = [3, 5, 7, 4, 6, 7, 11, 9, 2, 8, 3, 2]
-
+def main_quick_sort():
+  comm = MPI.COMM_WORLD
   parallel_quicksort(DATA, comm)
 
 if __name__ == '__main__':
-    main()
+    main_quick_sort()
